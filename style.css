@@ -1,0 +1,249 @@
+/* -------- Base -------- */
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
+}
+
+.carousel-img {
+  height: 100vh;           /* 全螢幕高度 */
+  object-fit: cover;
+}
+
+.carousel-caption {
+  bottom: 40%;             /* 文字位置 */
+}
+
+/* -------- Navbar：透明 → 捲動變白 -------- */
+/* 初始：透明背景 */
+.navbar {
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 透明狀態：字體一律白色（品牌、連結、icon） */
+.navbar:not(.scrolled) .navbar-brand,
+.navbar:not(.scrolled) .nav-link,
+.navbar:not(.scrolled) .bi {
+  color: #fff !important;
+}
+
+/* 捲動後：白底黑字，加陰影 */
+.navbar.scrolled {
+  background-color: #fff !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.navbar.scrolled .navbar-brand,
+.navbar.scrolled .nav-link,
+.navbar.scrolled .bi {
+  color: #000 !important;
+}
+
+/* hover 效果（兩種狀態都適用） */
+.navbar .nav-link:hover {
+  opacity: .8;
+}
+
+/* （可選）行動版漢堡按鈕：透明時白、捲動後黑 */
+.navbar .navbar-toggler {
+  border: none;
+}
+.navbar:not(.scrolled) .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar.scrolled .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* -------- Footer -------- */
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+footer a:hover {
+  color: #000;
+}
+
+/* 內頁上方留白（避開 fixed-top navbar） */
+.page-padding { padding-top: 90px; }
+
+/* 商品卡片小強化 */
+.product-card img { object-fit: cover; height: 180px; }
+.product-card .card-title { font-weight: 600; }
+
+/* 放大 icon */
+.navbar .bi {
+  font-size: 1.4rem;   /* 預設比原本大 */
+}
+
+/* 購物車數量徽章 */
+.cart-badge {
+  position: absolute;
+  top: -1px;
+  right: -4px;
+  background-color: gray;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 5px;
+  line-height: 1;
+}
+
+/* -------- news.html -------- */
+/* 文章卡片 */
+.post-card {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.post-cover {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.post-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 日期角標（左上） */
+.post-date {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 54px;
+  text-align: center;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  line-height: 1.1;
+  padding: 6px 0;
+  font-weight: 700;
+}
+.post-date .day { font-size: 20px; }
+.post-date .month { font-size: 12px; color: #666; }
+
+/* 分類膠囊 (文章小下面的藍色文字方格)*/
+/* 讓卡片允許元素超出邊界並作為定位參考 */
+.post-card{
+  position: relative;
+  overflow: visible;         /* 很重要：讓膠囊能超出 cover */
+  border-radius: 12px;
+}
+
+/* 圖片容器 */
+.post-cover{
+  position: relative;
+  aspect-ratio: 5/3;         /* 你原本的比例，可自行調整 */
+  overflow: visible;          /* 很重要：讓膠囊能往外 */
+}
+
+/* 分類膠囊：置中，從圖片底邊向下「跨」出去 */
+.post-category{
+  position: absolute;
+  left: 50%;
+  bottom: -12px;             /* 調整跨出去的量（越負 → 越往下）*/
+  transform: translateX(-50%);
+  background: #1f6feb;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* 為了不讓膠囊壓到標題，內文區往下讓出空間 */
+.post-body{
+  padding: 24px;
+  padding-top: 36px;         /* 重點：要比 bottom 的絕對值再多一些 */
+}
+
+/* 文章內容 */
+.post-body { padding: 24px; }
+.post-title { font-weight: 800; margin-bottom: .5rem; }
+.post-excerpt { color: #555; }
+.post-read { font-weight: 700; }
+
+/* 側欄近期文章 */
+.recent-item { display: flex; gap: 10px; }
+.recent-item img {
+  width: 64px; height: 48px; object-fit: cover; border-radius: 6px;
+}
+
+/* -------- about.html -------- */
+/* About 頁面圖片更好看 */
+.about-section img {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* -------- account.html -------- */
+/* 帳號頁 */
+/* 修正密碼輸入框與眼睛按鈕的邊框銜接 */
+/* 修正密碼輸入框與眼睛按鈕的邊框銜接 */
+
+
+/* 所有輸入框統一外觀 */
+.form-control {
+  border: 2px solid #ced4da;          /* 加粗邊框 */
+  border-radius: 8px;                 /* 圓角更明顯 */
+  padding: 0.65rem 0.75rem;           /* 內距加大 */
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;   /* 動畫效果 */
+}
+
+/* 聚焦時：邊框變藍，增加陰影 */
+.form-control:focus {
+  border-color: #5f6367;              /* Bootstrap 主色（藍色） */
+  box-shadow: 0 0 0 0.2rem rgba(37, 38, 40, 0.25);
+}
+
+/* 錯誤時（Bootstrap 驗證失敗樣式） */
+.form-control.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+/*把"我的帳號"網頁裡的登入及註冊按鈕改成灰色*/
+.btn-gray {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+.btn-gray:hover {
+  background-color: #5c636a;
+  border-color: #565e64;
+  color: #fff;
+}
+
+.btn-outline-gray {
+  color: #6c757d;
+  border-color: #6c757d;
+  background-color: transparent;
+}
+.btn-outline-gray:hover {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* 忘記密碼連結改灰色 */
+.forgot-link {
+  color: #6c757d !important;
+  text-decoration: none;
+}
+.forgot-link:hover {
+  color: #5c636a !important;
+  text-decoration: underline;
+}
+
+
+
+
