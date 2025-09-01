@@ -33,3 +33,11 @@
   wire(signin, 'in');
   wire(signup, 'up');
 })();
+
+// 手機選單開/關時鎖住背景捲動（避免底下卡片跟著動）
+(function(){
+  const nav = document.querySelector('.navbar .navbar-collapse');
+  if (!nav) return;
+  nav.addEventListener('shown.bs.collapse', () => document.body.classList.add('nav-open'));
+  nav.addEventListener('hidden.bs.collapse', () => document.body.classList.remove('nav-open'));
+})();
