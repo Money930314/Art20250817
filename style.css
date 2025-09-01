@@ -343,3 +343,11 @@ body.nav-open { overflow: hidden; }
   .auth-card{ width: min(92vw, 420px); margin: 0 auto; }
 }
 
+/* 手機展開選單時，強制 icon 與連結為白色（蓋過 .scrolled 的黑色） */
+@media (max-width: 991.98px) {
+  body.nav-open .navbar .bi,
+  body.nav-open .navbar .nav-link {
+    color: #fff !important;
+  }
+}
+
