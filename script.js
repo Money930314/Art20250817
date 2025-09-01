@@ -290,3 +290,11 @@ if (postList) {
   attachValidation(registerForm);
 })();
 
+
+// 手機選單開/關時鎖住背景捲動，並提供 nav-open 這個狀態讓 CSS 覆蓋顏色
+(function(){
+  const nav = document.querySelector('.navbar .navbar-collapse');
+  if (!nav) return;
+  nav.addEventListener('shown.bs.collapse', () => document.body.classList.add('nav-open'));
+  nav.addEventListener('hidden.bs.collapse', () => document.body.classList.remove('nav-open'));
+})();
