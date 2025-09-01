@@ -185,65 +185,107 @@ footer a:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* -------- account.html -------- */
-/* 帳號頁 */
-/* 修正密碼輸入框與眼睛按鈕的邊框銜接 */
-/* 修正密碼輸入框與眼睛按鈕的邊框銜接 */
+/* ========== account.html（合併版） ========== */
+/* 仍沿用現有 .navbar / .navbar.scrolled 的規則，帳號頁不用另寫 navbar */
 
-
-/* 所有輸入框統一外觀 */
-.form-control {
-  border: 2px solid #ced4da;          /* 加粗邊框 */
-  border-radius: 8px;                 /* 圓角更明顯 */
-  padding: 0.65rem 0.75rem;           /* 內距加大 */
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;   /* 動畫效果 */
+/* 視口與背景（與首頁透明 navbar 相容：背景圖會在 navbar 下方） */
+.auth-viewport{
+  min-height: 100vh; /* 避開 fixed-top，90px 與你現有 .page-padding 一致 */
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
 
-/* 聚焦時：邊框變藍，增加陰影 */
-.form-control:focus {
-  border-color: #5f6367;              /* Bootstrap 主色（藍色） */
-  box-shadow: 0 0 0 0.2rem rgba(37, 38, 40, 0.25);
+.auth-bg{
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(900px 480px at 20% 20%, #ffffff0f, transparent),
+    radial-gradient(900px 480px at 80% 80%, #ffffff10, transparent),
+    url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=1600') center/cover no-repeat;
+  filter: grayscale(100%) brightness(.35);
+  z-index: 0;
 }
 
-/* 錯誤時（Bootstrap 驗證失敗樣式） */
-.form-control.is-invalid {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+/* 卡片 */
+.auth-card{
+  position: relative; z-index: 1;
+  width: min(460px, 94vw);
+  background: #212326;           /* 與 account.css 一致（深灰） */
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  box-shadow: 0 28px 60px rgba(0,0,0,.45);
 }
 
-/*把"我的帳號"網頁裡的登入及註冊按鈕改成灰色*/
-.btn-gray {
-  background-color: #6c757d;
-  border-color: #6c757d;
+/* 品牌（已移除綠點，只留文字） */
+.auth-brand{
+  margin: 0 0 6px;
+  font-size: 1.4rem;
+  letter-spacing: .12em;
+  font-weight: 900;
+  color: #f5f6f7;
+  text-rendering: optimizeLegibility;
+}
+
+/* 分頁標籤 */
+.auth-tabs{ display:flex; gap:28px; justify-content:center; margin:6px 0 18px; }
+.auth-tab{
+  background: transparent; border: 0; color: #b7bdc4;
+  font-weight: 800; letter-spacing: .06em; padding: 4px 2px;
+}
+.auth-tab.active{ color: #fff; }
+.auth-tab.active::after{
+  content:""; display:block; height:3px; border-radius:3px; background:#fff; margin-top:6px;
+}
+
+/* 欄位：盡量沿用現有 .form-control，僅在卡片裡做「深色膠囊」差異化 */
+.auth-card .form-control{
+  background: #2b2e32;
+  border: 1px solid #3a3f45;     /* 與 account.css 的 --c-line 對應 */
   color: #fff;
+  border-radius: 999px;          /* 膠囊外觀 */
+  padding: .9rem 1.1rem;
 }
-.btn-gray:hover {
-  background-color: #5c636a;
-  border-color: #565e64;
-  color: #fff;
-}
-
-.btn-outline-gray {
-  color: #6c757d;
-  border-color: #6c757d;
-  background-color: transparent;
-}
-.btn-outline-gray:hover {
-  background-color: #6c757d;
-  color: #fff;
+.auth-card .form-control::placeholder{ color:#c6ccd2; }
+.auth-card .form-control:focus{
+  background: #30343a;
+  border-color: #6b717a;         /* --c-line-strong 對應 */
+  box-shadow: 0 0 0 .2rem rgba(255,255,255,.12);
 }
 
-/* 忘記密碼連結改灰色 */
-.forgot-link {
+/* 主要按鈕：沿用你已經在 style.css 內的 .btn-gray（不重覆宣告） */
+/* 統一全站「登入 / 註冊」按鈕與首頁 slide 的按鈕樣式 */
+.btn-auth {
+  background-color: #fff;
+  border: 1px solid #fff;
+  color: #000;
+  border-radius: 999px;    /* 膠囊風格 */
+  font-weight: 600;
+  padding: .65rem 1.2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-auth:hover,
+.btn-auth:focus,
+.btn-auth:active {
+  background-color: #5b5b5b;  /* 淺灰 */
+  border-color: #262728;
+  color: #000;
+}
+
+/* 連結顏色：把 .auth-link 併到你原有的 .forgot-link（共用一組） */
+.forgot-link,
+.auth-link{
   color: #6c757d !important;
   text-decoration: none;
 }
-.forgot-link:hover {
+.forgot-link:hover,
+.auth-link:hover{
   color: #5c636a !important;
   text-decoration: underline;
 }
 
-
+/* 驗證錯誤（共用 Bootstrap 類別，顏色同步） */
+.invalid-feedback{ color:#ffb3b3; }
 
 
