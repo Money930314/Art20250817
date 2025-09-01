@@ -289,3 +289,57 @@ footer a:hover {
 .invalid-feedback{ color:#ffb3b3; }
 
 
+/* 手機導覽列展開 → 做全畫面遮罩，覆蓋內容（含登入卡片） */
+@media (max-width: 991.98px) {
+  .navbar .navbar-collapse {
+    position: fixed;          /* 固定住，不讓內容把它往下推 */
+    top: 56px;                /* 導覽列高度（你的 fixed-top 高度） */
+    left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.85);  /* 深色+半透明 */
+    z-index: 1050;            /* 高於 .auth-card（你的卡片 z-index:1） */
+    padding: 1.25rem 1rem;
+    overflow-y: auto;         /* 選單過長可捲動 */
+    backdrop-filter: blur(2px);
+  }
+  /* 展開/收起動畫用這兩行避免高度跳動 */
+  .navbar .navbar-collapse.collapsing { height: 100% !important; transition: none; }
+  .navbar .navbar-collapse.show       { height: 100% !important; }
+
+  /* 選單字色與大小（與你透明 navbar 的白字一致） */
+  .navbar .navbar-collapse .nav-link {
+    color: #fff !important;
+    font-size: 1.25rem;
+    text-align: center;
+    padding: .75rem 0;
+  }
+}
+
+/*成效：打開漢堡選單時，整個選單會「蓋在最上面」，底下登入小卡不會跟選單重疊/互搶焦點，看起來就是一個正式的全畫面選單。*/
+body.nav-open { overflow: hidden; }
+
+/* 置中容器：使用 dvh（dynamic viewport height）以避開手機瀏覽器工具列問題 */
+.auth-viewport{
+  min-height: 100dvh;  /* 90px 為你 fixed-top 頂部間距 */
+  display: grid;
+  place-items: center;               /* 水平 + 垂直置中 */
+  position: relative;
+  padding: 16px;                     /* 手機縮小內距，避免貼邊 */
+}
+
+/* 背景圖固定鋪滿：避免底下露白帶 */
+.auth-bg{
+  position: fixed;                   /* 原本若是 absolute 會跟內容一起動，改成 fixed */
+  inset: 0;
+  background:
+    radial-gradient(900px 480px at 20% 20%, #ffffff0f, transparent),
+    radial-gradient(900px 480px at 80% 80%, #ffffff10, transparent),
+    url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=1600') center/cover no-repeat;
+  filter: grayscale(100%) brightness(.35);
+  z-index: 0;
+}
+
+/* 小卡在手機寬度下縮得更舒服一些 */
+@media (max-width: 576px){
+  .auth-card{ width: min(92vw, 420px); margin: 0 auto; }
+}
+
